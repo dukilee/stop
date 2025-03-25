@@ -2,7 +2,6 @@ import { useState } from 'react';
 import './Question.css';
 
 function Question({questionId, onAnswer, questionData}){
-    console.log(questionData);
     const [selected, updateSelection] = useState(-1);
     const alternativeSelected = (option) => {
         onAnswer(questionId, option);
