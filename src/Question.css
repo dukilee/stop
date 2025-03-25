@@ -1,0 +1,29 @@
+.container {
+    background-color:beige;
+}
+
+.question {
+    background-color:burlywood;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+.button {
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 3px;
+}
+.selected-button {
+    background-color: #9834db;  /* A nice blue */
+}
+
+.unselected-button {
+    background-color: #3498db;  /* A nice blue */
+}
