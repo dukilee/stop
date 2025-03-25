@@ -12,10 +12,8 @@ logs/
 
 # dotenv
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.production
+.env.development
 
 # Vite
 dist/
