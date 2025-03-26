@@ -1,0 +1,19 @@
+.question-box {
+  margin: 16px 0;
+  background-color: beige;
+}
+
+.question-text {
+  font-size: 18px;
+  margin-bottom: 8px;
+  background-color: beige;
+}
+
+.answer-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: beige;
+}

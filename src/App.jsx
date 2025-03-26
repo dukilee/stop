@@ -1,8 +1,10 @@
 import './App.css';
 import Question from './Question';
+import InputQuestion from './InputQuestion';
 import { useRef, useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import questionsData from './Questions.json';
+import { QuestionType, verify, name} from './InputQuestionType';
 
 const NUMBER_OF_QUESTIONS = 5;
 const TIMER_IN_SECONDS = 5;
@@ -10,10 +12,13 @@ const TIMER_IN_SECONDS = 5;
 function App() {
   const socketRef = useRef(null);
   const answers = useRef(new Array(NUMBER_OF_QUESTIONS).fill(null));
+  const correct = useRef(new Array(NUMBER_OF_QUESTIONS).fill(null));
   const [complete, updateComplete] = useState(false);
   const [timeLeft, setTimeLeft] = useState(TIMER_IN_SECONDS); // seconds
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null); // to keep track of the interval ID
+  const questionTypes = [QuestionType.DOUBLE, QuestionType.TRIPLE, QuestionType.ADD_TEN, QuestionType.SUCCESSOR, QuestionType.SQUARED];
+  const selectedNumber = 19;
 
   //TIMER
   useEffect(() => {
@@ -43,7 +48,11 @@ function App() {
 
   //SERVER
   const sendAnswersToServer = () => {
-    const payload = answers.current;
+    const payload = {
+      'name': 'Guilherme',
+      'answers': answers.current,
+      'correct': correct.current,
+    };
     socketRef.current.emit('answers', payload);
   }
 
@@ -82,7 +91,13 @@ function App() {
   //APP
   const updateAnswer = (id, selection) => {
     answers.current[id] = selection;
+  }
+
+  const stopClicked = () => {
     if(!answers.current.includes(null)){
+      for(let i = 0; i<NUMBER_OF_QUESTIONS; i++){
+        correct.current[i] = verify(selectedNumber, answers.current[i], questionTypes[i])
+      }
       socketRef.current.emit('finished', {});
       sendAnswersToServer();
       updateComplete(true);
@@ -101,10 +116,16 @@ function App() {
           style={{ width: `${((timeLeft - 1) / (TIMER_IN_SECONDS - 1)) * 100}%` }}
         ></div>
       </div>
+      <div className="selected-number">
+        {selectedNumber}
+      </div>
       <div>
         {[...Array(NUMBER_OF_QUESTIONS)].map((_, index) => (
-          <Question questionId={index} onAnswer={updateAnswer} questionData={questionsData.questions[index]} />
+          <InputQuestion questionId={index} questionType={questionTypes[index]} updateAnswer={updateAnswer} selectedNumber={selectedNumber} />
         ))}
+      </div>
+      <div>
+        <button className="octagon-btn" onClick={stopClicked}>Click Me</button>
       </div>
     </div>
   }
