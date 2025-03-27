@@ -1,9 +1,7 @@
 import './App.css';
-import Question from './Question';
 import InputQuestion from './InputQuestion';
 import { useRef, useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
-import questionsData from './Questions.json';
 import { QuestionType, verify, name} from './InputQuestionType';
 
 const NUMBER_OF_QUESTIONS = 5;
@@ -18,7 +16,7 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null); // to keep track of the interval ID
   const questionTypes = [QuestionType.DOUBLE, QuestionType.TRIPLE, QuestionType.ADD_TEN, QuestionType.SUCCESSOR, QuestionType.SQUARED];
-  const selectedNumber = 19;
+  const [selectedNumber, updateSelectedNumber] = useState(19);
 
   //TIMER
   useEffect(() => {
@@ -82,6 +80,10 @@ function App() {
     socketRef.current.on('getAnswers', (data) => {
       startTimer();
     });
+
+    socketRef.current.on('nextNumber', (data) => {
+      updateSelectedNumber(data.val);
+    })
 
     return () => {
       socketRef.current.disconnect();
