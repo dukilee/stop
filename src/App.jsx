@@ -4,18 +4,17 @@ import { useRef, useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { QuestionType, verify, name} from './InputQuestionType';
 
-const NUMBER_OF_QUESTIONS = 5;
 const TIMER_IN_SECONDS = 5;
 
 function App() {
   const socketRef = useRef(null);
-  const answers = useRef(new Array(NUMBER_OF_QUESTIONS).fill(null));
-  const correct = useRef(new Array(NUMBER_OF_QUESTIONS).fill(null));
   const [complete, updateComplete] = useState(false);
   const [timeLeft, setTimeLeft] = useState(TIMER_IN_SECONDS); // seconds
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null); // to keep track of the interval ID
-  const questionTypes = [QuestionType.DOUBLE, QuestionType.TRIPLE, QuestionType.ADD_TEN, QuestionType.SUCCESSOR, QuestionType.SQUARED];
+  const [questionTypes, updateQuestionTypes] = useState([QuestionType.DOUBLE, QuestionType.TRIPLE, QuestionType.ADD_TEN, QuestionType.SUCCESSOR, QuestionType.SQUARED]);
+  const answers = useRef(new Array(questionTypes.length).fill(null));
+  const correct = useRef(new Array(questionTypes.length).fill(null));
   const [selectedNumber, updateSelectedNumber] = useState(19);
 
   //TIMER
@@ -83,6 +82,8 @@ function App() {
 
     socketRef.current.on('nextNumber', (data) => {
       updateSelectedNumber(data.val);
+      console.log(data.questionTypes);
+      updateQuestionTypes(data.questionTypes);
     })
 
     return () => {
@@ -97,7 +98,7 @@ function App() {
 
   const stopClicked = () => {
     if(!answers.current.includes(null)){
-      for(let i = 0; i<NUMBER_OF_QUESTIONS; i++){
+      for(let i = 0; i<questionTypes.length; i++){
         correct.current[i] = verify(selectedNumber, answers.current[i], questionTypes[i])
       }
       socketRef.current.emit('finished', {});
@@ -122,8 +123,8 @@ function App() {
         {selectedNumber}
       </div>
       <div>
-        {[...Array(NUMBER_OF_QUESTIONS)].map((_, index) => (
-          <InputQuestion questionId={index} questionType={questionTypes[index]} updateAnswer={updateAnswer} selectedNumber={selectedNumber} />
+        {[...Array(questionTypes.length)].map((_, index) => (
+          <InputQuestion key={index} questionId={index} questionType={questionTypes[index]} updateAnswer={updateAnswer} selectedNumber={selectedNumber} />
         ))}
       </div>
       <div>

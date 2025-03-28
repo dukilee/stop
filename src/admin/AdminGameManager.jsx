@@ -27,9 +27,11 @@ function AdminData(){
 
   const generateNumberAndEmitData = () => {
     const val = randomNumber();
+    const questionTypes = Object.entries(questionTypesActive.current).filter(([key, value]) => value).map(([key])=>parseInt(key));
+    console.log(questionTypes);
     updateNumber(val);
     socketRef.current.emit('nextNumber', {
-      val, 'questionTypes': questionTypesActive.current
+      val, questionTypes
     })
   }
 
@@ -42,7 +44,7 @@ function AdminData(){
     QuestionType.SQUARED,
     QuestionType.SUCCESSOR,
     QuestionType.TRIPLE
-  ];
+  ].sort((a, b) => a-b);
 
   const questionTypesActive = useRef(
     questionTypesAvailable.reduce((acc, key) => {
