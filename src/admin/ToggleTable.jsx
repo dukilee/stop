@@ -1,31 +1,26 @@
 import React, { useState } from 'react';
 import ToggleCell from './ToggleCell';
+import { name } from '../InputQuestionType';
+import './ToggleTable.css';
 
-function ToggleTable(){
-  const NUM_CELLS = 13;
+function ToggleTable({questionTypesAvailable, setQuestionType}){
 
-  // Create an array of dummy components
-  const items = Array.from({ length: NUM_CELLS }, (_, i) => (
-    <ToggleCell key={i} index={i} />
+  const items = Array.from({ length: questionTypesAvailable.length }, (_, i) => (
+    <ToggleCell
+      isActive={false}
+      index={questionTypesAvailable[i]}
+      key={i}
+      displayText={name(questionTypesAvailable[i])}
+      setQuestionType={setQuestionType}
+    />
   ));
 
-  // Group items into rows with a max of 4 columns
-  const rows = [];
-  for (let i = 0; i < items.length; i += 4) {
-    rows.push(items.slice(i, i + 4));
-  }
-
   return (
-    <div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {rows.map((row, rowIndex) => (
-          <div key={rowIndex} style={{ display: 'flex', gap: '10px' }}>
-            {row}
-          </div>
-        ))}
-      </div>
+    <div className="grid-container">
+      {items}
     </div>
   );
+
 };
 
 export default ToggleTable;

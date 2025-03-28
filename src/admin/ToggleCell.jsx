@@ -1,14 +1,14 @@
 import { useState } from "react";
 import './ToggleCell.css';
 
-function ToggleCell({isActive=false, index}){
+function ToggleCell({isActive=false, index, displayText, setQuestionType}){
     const [active, setActive] = useState(isActive);
     const handleClick = () => {
+        setQuestionType(!active, index);
         setActive(prev => !prev);
-        console.log(index);
     }
     return <div>
-        <button onClick={handleClick} className={active?'toggle-cell-active':'toggle-cell-inactive'}>MATH{index}</button>
+        <button onClick={handleClick} className={active?'toggle-cell-active':'toggle-cell-inactive'}>{displayText}</button>
     </div>
 }
 
