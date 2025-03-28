@@ -17,6 +17,7 @@ function Game({username}) {
   const correct = useRef(new Array(questionTypes.length).fill(null));
   const [selectedNumber, updateSelectedNumber] = useState(19);
   const [isConnected, setIsConnected] = useState(false);
+  const hasSentpayload = useRef(false);
 
   //TIMER
   useEffect(() => {
@@ -46,6 +47,12 @@ function Game({username}) {
 
   //SERVER
   const sendAnswersToServer = () => {
+    if(hasSentpayload.current) return;
+    hasSentpayload.current = true;
+
+    for(let i = 0; i<questionTypes.length; i++){
+      correct.current[i] = verify(selectedNumber, answers.current[i], questionTypes[i])
+    }
     const payload = {
       'name': username,
       'answers': answers.current,
@@ -75,11 +82,11 @@ function Game({username}) {
 
     socketRef.current.on('nextNumber', (data) => {
       updateSelectedNumber(data.val);
-      console.log(data.questionTypes);
       answers.current = new Array(data.questionTypes.length).fill(null);
       correct.current = new Array(data.questionTypes.length).fill(null);
       updateQuestionTypes(data.questionTypes);
       updateComplete(false);
+      hasSentpayload.current = false;
     })
 
     return () => {
@@ -93,11 +100,7 @@ function Game({username}) {
   }
 
   const stopClicked = () => {
-    console.log(answers);
     if(!answers.current.includes(null)){
-      for(let i = 0; i<questionTypes.length; i++){
-        correct.current[i] = verify(selectedNumber, answers.current[i], questionTypes[i])
-      }
       socketRef.current.emit('finished', {});
       sendAnswersToServer();
       updateComplete(true);

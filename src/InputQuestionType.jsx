@@ -16,6 +16,7 @@ export const QuestionType = {
 };
 
 export function verify(question, answer, questionType){
+  if(answer == null) return false;
   switch(questionType){
     // case QuestionType.PARITY:
     //   return question % 2 == answer;
