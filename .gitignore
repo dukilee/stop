@@ -13,7 +13,6 @@ logs/
 # dotenv
 .env
 .env.production
-.env.development
 
 # Vite
 dist/

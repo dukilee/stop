@@ -1,0 +1,42 @@
+.Game {
+  text-align: center;
+  background-color: blueviolet;
+  display: flex;
+  height: 100vh;
+}
+
+.timer-container {
+  width: 100%;
+  background-color: #e2e8f0; /* gray-300 */
+  height: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.timer-bar {
+  height: 100%;
+  background-color: #3b82f6; /* blue-500 */
+  transition: width 1s linear;
+}
+.selected-number {
+  font-size: 42px;
+  background-color:beige;
+  text-align: center;
+  font-weight: bold;
+}
+.octagon-btn {
+  background-color:#aa2222;
+  color: white;
+  padding: 1em 2em;
+  font-size: 32px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  clip-path: polygon(
+    30% 0%, 70% 0%, 
+    100% 30%, 100% 70%, 
+    70% 100%, 30% 100%, 
+    0% 70%, 0% 30%
+  );
+  transition: background-color 0.2s ease;
+}

@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --host --mode development",
+    "dev:bypass": "vite --host --mode development-bypass",
     "prod": "vite --host --mode production",
     "build": "vite build --mode production",
     "preview": "vite preview",
