@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Admin from './admin/Admin';
+import AdminData from './admin/AdminData';
+import AdminGameManager from './admin/AdminGameManager';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,7 +16,11 @@ const router = createBrowserRouter([
   },
   {
     path:"/admin",
-    element: <Admin />
+    element: <Admin />,
+    children:[
+      {index:true, element: <AdminGameManager />},
+      {path: 'data', element: <AdminData />},
+    ],
   },
 ])
 

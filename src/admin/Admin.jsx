@@ -1,5 +1,7 @@
 import { io } from 'socket.io-client';
 import { useRef, useState, useEffect } from 'react';
+import Sidebar from './SideBar';
+import { Outlet } from 'react-router-dom';
 
 function Admin(){
   const socketRef = useRef(null);
@@ -40,8 +42,12 @@ function Admin(){
 
 
   return <div>
-    {number}
-    <button onClick={generateNewNumber}>New number</button>
+    <Sidebar />
+    <div>
+      {number}
+      <button onClick={generateNewNumber}>New number</button>
+      <Outlet />
+    </div>
   </div>
 }
 
