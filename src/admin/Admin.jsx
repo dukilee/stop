@@ -1,4 +1,4 @@
-import Sidebar from './SideBar';
+import Sidebar from './Sidebar';
 import { Outlet } from 'react-router-dom';
 
 function Admin(){
