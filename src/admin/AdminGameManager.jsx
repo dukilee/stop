@@ -2,13 +2,15 @@ import { io } from 'socket.io-client';
 import { useRef, useState, useEffect } from 'react';
 import ToggleTable from './ToggleTable';
 import { QuestionType } from '../InputQuestionType';
+import { getBackendUrl } from '../Server';
 
 function AdminData(){
   const socketRef = useRef(null);
   const [number, updateNumber] = useState(19);
   useEffect(() => {
-    console.log('Trying to connect to '+import.meta.env.VITE_SOCKET_URL+'...');
-    socketRef.current = io(import.meta.env.VITE_SOCKET_URL, {
+    const backendUrl = getBackendUrl();
+    console.log('Trying to connect to '+backendUrl+'...');
+    socketRef.current = io(backendUrl, {
       transports: ['websocket'],
     });
 

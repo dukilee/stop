@@ -3,6 +3,7 @@ import InputQuestion from '../InputQuestion';
 import { useRef, useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { QuestionType, verify, name} from '../InputQuestionType';
+import { getBackendUrl } from '../Server';
 
 const TIMER_IN_SECONDS = 5;
 
@@ -67,8 +68,9 @@ function Game({username}) {
   };
 
   useEffect(() => {
-    console.log('Trying to connect to '+import.meta.env.VITE_SOCKET_URL+'...');
-    socketRef.current = io(import.meta.env.VITE_SOCKET_URL, {
+    const backendUrl = getBackendUrl();
+    console.log('Trying to connect to '+backendUrl+'...');
+    socketRef.current = io(backendUrl, {
       transports: ['websocket'],
     });
 
