@@ -38,9 +38,6 @@ function NumberGenerator({emit}){
       }}> GENERATE </button>
     </div>
   </div>
-
-
-
 }
 
 export default NumberGenerator;

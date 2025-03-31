@@ -25,6 +25,7 @@ function AdminData(){
   }, []);
 
   const setNumberAndEmitData = (val) => {
+    console.log('val wa generated');
     const questionTypes = Object.entries(questionTypesActive.current).filter(([key, value]) => value).map(([key])=>parseInt(key));
     socketRef.current.emit('nextNumber', {
       val, questionTypes
@@ -36,10 +37,14 @@ function AdminData(){
     QuestionType.ADD_TWENTY,
     QuestionType.CUBE,
     QuestionType.DOUBLE,
+    QuestionType.PARITY,
+    QuestionType.PERFECT_CUBE,
+    QuestionType.PERFECT_SQUARE,
     QuestionType.PREDECESSOR,
+    QuestionType.PRIME,
     QuestionType.SQUARED,
     QuestionType.SUCCESSOR,
-    QuestionType.TRIPLE
+    QuestionType.TRIPLE,
   ].sort((a, b) => a-b);
 
   const questionTypesActive = useRef(
@@ -54,7 +59,7 @@ function AdminData(){
   }
 
   return <div>
-    <NumberGenerator setNumber={setNumberAndEmitData}/>
+    <NumberGenerator emit={setNumberAndEmitData}/>
     <ToggleTable
       questionTypesAvailable={questionTypesAvailable}
       setQuestionType={setQuestionType}

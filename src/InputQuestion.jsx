@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './InputQuestion.css';
-import { QuestionType, verify, name} from './InputQuestionType';
+import { QuestionType, verify, name, isNumberOnly} from './InputQuestionType';
 
 function InputQuestion({ questionId, questionType , updateAnswer, selectedNumber}) {
   const [answer, setAnswer] = useState('');
@@ -14,7 +14,7 @@ function InputQuestion({ questionId, questionType , updateAnswer, selectedNumber
     <div className="question-box">
       <p className="question-text">{name(questionType)}</p>
       <input
-        type="number"
+        type={isNumberOnly(questionType)?"number":"text"}
         value={answer}
         onChange={handleChange}
         className="answer-input"
