@@ -1,7 +1,7 @@
+import Database from "./Database";
+
 function AdminData(){
-  return <div>
-    Esse eh o admin data do mal
-  </div>
+  return <Database />
 }
 
 export default AdminData;
