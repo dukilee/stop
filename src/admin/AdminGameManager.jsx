@@ -4,10 +4,10 @@ import ToggleTable from './ToggleTable';
 import { QuestionType } from '../InputQuestionType';
 import { getBackendUrl } from '../Server';
 import UsersPanel from './UsersPanel';
+import NumberGenerator from './NumberGenerator';
 
 function AdminData(){
   const socketRef = useRef(null);
-  const [number, updateNumber] = useState(19);
   useEffect(() => {
     const backendUrl = getBackendUrl();
     console.log('Trying to connect to '+backendUrl+'...');
@@ -24,15 +24,8 @@ function AdminData(){
     };
   }, []);
 
-  const randomNumber = () => {
-    return Math.floor(Math.random()*30 - 10);
-  }
-
-  const generateNumberAndEmitData = () => {
-    const val = randomNumber();
+  const setNumberAndEmitData = (val) => {
     const questionTypes = Object.entries(questionTypesActive.current).filter(([key, value]) => value).map(([key])=>parseInt(key));
-    console.log(questionTypes);
-    updateNumber(val);
     socketRef.current.emit('nextNumber', {
       val, questionTypes
     })
@@ -61,13 +54,7 @@ function AdminData(){
   }
 
   return <div>
-    <div>
-      {number}
-      <button onClick={() => {
-        console.log(questionTypesActive.current);
-        generateNumberAndEmitData();
-      }} > VERIFY IT </button>
-    </div>
+    <NumberGenerator setNumber={setNumberAndEmitData}/>
     <ToggleTable
       questionTypesAvailable={questionTypesAvailable}
       setQuestionType={setQuestionType}
