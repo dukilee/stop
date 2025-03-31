@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 import ToggleTable from './ToggleTable';
 import { QuestionType } from '../InputQuestionType';
 import { getBackendUrl } from '../Server';
+import UsersPanel from './UsersPanel';
 
 function AdminData(){
   const socketRef = useRef(null);
@@ -71,6 +72,7 @@ function AdminData(){
       questionTypesAvailable={questionTypesAvailable}
       setQuestionType={setQuestionType}
     />
+    <UsersPanel />
   </div>
 }
 
