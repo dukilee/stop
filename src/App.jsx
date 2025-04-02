@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Game from './game/Game';
 import InputName from './game/InputName';
-import GoToAdminButton from './GoToAdminButton';
 
 function App() {
   const [username, setUsername] = useState(import.meta.env.VITE_USERNAME || '');
@@ -14,12 +13,7 @@ function App() {
     </div>
   }else{
     return <div>
-      <div>
-        <InputName setUsername={setUsername} />
-      </div>
-      <div>
-        <GoToAdminButton />
-      </div>
+      <InputName setUsername={setUsername} />
     </div>
   }
 }
