@@ -5,7 +5,6 @@ import InputName from './game/InputName';
 function App() {
   const [username, setUsername] = useState(import.meta.env.VITE_USERNAME || '');
   console.log({username});
-  // const 
 
   if(username){
     return <div>

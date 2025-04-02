@@ -88,6 +88,7 @@ function Game({username}) {
       correct.current = new Array(data.questionTypes.length).fill(null);
       updateQuestionTypes(data.questionTypes);
       updateComplete(false);
+      setTimeLeft(TIMER_IN_SECONDS);
       hasSentpayload.current = false;
     })
 
@@ -108,14 +109,11 @@ function Game({username}) {
       updateComplete(true);
     }
   }
+  console.log(complete)
 
   if(!isConnected){
     return <div>
       <h1>DISCONNECTED FROM SERVER</h1>
-    </div>
-  }else if(complete){
-    return <div>
-      <h1>Ready to go for the next Round... {username}</h1>
     </div>
   }else{
     return <div>
@@ -130,7 +128,14 @@ function Game({username}) {
       </div>
       <div>
         {[...Array(questionTypes.length)].map((_, index) => (
-          <InputQuestion key={index} questionId={index} questionType={questionTypes[index]} updateAnswer={updateAnswer} selectedNumber={selectedNumber} />
+          <InputQuestion
+            key={index}
+            questionId={index}
+            questionType={questionTypes[index]}
+            updateAnswer={updateAnswer}
+            selectedNumber={selectedNumber}
+            display={complete?correct.current[index]:null}
+          />
         ))}
       </div>
       <div>

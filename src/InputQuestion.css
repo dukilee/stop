@@ -17,3 +17,11 @@
   border: 1px solid #ccc;
   background-color: beige;
 }
+
+.answer-correct {
+  background-color: lightgreen;
+}
+
+.answer-wrong {
+  background-color: lightcoral;
+}
