@@ -33,3 +33,6 @@ coverage/
 
 # Optional: ignore Render deploy logs or local stuff
 render.yaml
+
+# MISC
+.VSCodeCounter/
